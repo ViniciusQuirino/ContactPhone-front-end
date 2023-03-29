@@ -22,18 +22,10 @@ function Signup() {
   const [passwordOne, setPasswordOne] = useState(false);
   const [passwordTwo, setpasswordTwo] = useState(false);
 
-  function onSubm(data: iFormSignup) {
-    // const validatedData = data as iFormSignup;
-    console.log(data);
-    // e.preventDefault()
-    setTimeout(() => {
-      registerUser(data);
-    }, 3000);
-  }
   return (
     <General>
       <img className="logo" src={logo} alt="logotipo" />
-      <form onSubmit={() => handleSubmit(onSubm)}>
+      <form onSubmit={handleSubmit(registerUser)}>
         <div className="top">
           <h3>Crie sua conta</h3>
           <span>Rapido e grátis, vamos nessa!</span>
@@ -48,7 +40,7 @@ function Signup() {
           />
           <p>{errors.name?.message}</p>
         </div>
-        {/* <div>
+        <div>
           <label htmlFor="signup-email">E-mail</label>
           <input
             {...register("email")}
@@ -68,8 +60,8 @@ function Signup() {
           />
           <BsEyeFill onClick={() => setPasswordOne(!passwordOne)} />
           <p>{errors.password?.message}</p>
-        </div> */}
-        {/* <div>
+        </div>
+        <div>
           <label htmlFor="signup-confirm-password">Confirmar senha</label>
           <input
             {...register("confirmPassword")}
@@ -79,17 +71,17 @@ function Signup() {
           />
           <BsEyeFill onClick={() => setpasswordTwo(!passwordTwo)} />
           <p>{errors.confirmPassword?.message}</p>
-        </div> */}
-        {/* <div>
+        </div>
+        <div>
           <label htmlFor="telephone">Telefone exemplo: (xx) xxxxx-xxxx</label>
           <input
-            {...register("tell")}
+            {...register("telefone")}
             type="text"
             id="telephone"
             placeholder="Digite o numero telefone"
           />
-          <p>{errors.tell?.message}</p>
-        </div> */}
+          <p>{errors.telefone?.message}</p>
+        </div>
         <button type="submit">Cadastrar</button>
         <Link to="/" className="dev">
           Voltar para a página de login

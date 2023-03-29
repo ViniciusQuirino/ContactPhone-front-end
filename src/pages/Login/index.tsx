@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Container from "./styled";
 import { useForm } from "react-hook-form";
 import { schemaLogin } from "../../validations";
@@ -6,6 +6,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { BsEyeFill } from "react-icons/bs";
 import logo from "../../assets/logo.png";
 import { Link } from "react-router-dom";
+import { UserContext } from "../../contexts/UserContext";
 
 export interface iFormLogin {
   email: string;
@@ -21,14 +22,16 @@ function Login() {
     resolver: yupResolver(schemaLogin),
   });
 
+  const { signInUser } = useContext(UserContext)
   const [password, setPassword] = useState(false);
+
 
   return (
     <Container>
       <img className="logo" src={logo} alt="logotipo" />
       <p>Organize seus contatos de forma fácil e simples.</p>
       <div className="container-login">
-        <form>
+        <form onSubmit={handleSubmit(signInUser)}>
           <h3>Login</h3>
           <div className="input">
             <label htmlFor="email">E-mail</label>

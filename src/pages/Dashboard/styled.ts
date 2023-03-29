@@ -8,7 +8,7 @@ const ContainerDash = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin:10px;
+    margin: 10px;
   }
 
   .dash-logo {
@@ -44,20 +44,20 @@ const ContainerDash = styled.div`
     margin: 10px 0;
   }
 
-  .div-update{
+  .div-update {
     font: var(--font-text-1);
     border: none;
     width: 80px;
     height: 40px;
     border-radius: 5px;
     background-color: var(--grey-1);
-    text-align:center ;
-    display:flex;
-    justify-content:center ;
+    text-align: center;
+    display: flex;
+    justify-content: center;
   }
 
   .div-update p {
-    color:var(--grey-3)
+    color: var(--grey-3);
   }
 
   section {
@@ -80,16 +80,22 @@ const ContainerDash = styled.div`
     align-items: center;
     justify-content: center;
     border-radius: var(--radius-1);
+    cursor: pointer;
   }
 
   .add p {
     font-size: 22px;
     color: var(--grey-3);
+    cursor: pointer;
   }
 
   .contact-ul {
+    background-color: var(--color-five);
+    padding: 1rem;
     display: flex;
     flex-direction: column;
+    border-radius: 5px;
+    margin: 0 1rem;
   }
 
   .contact-li {
@@ -112,8 +118,9 @@ const ContainerDash = styled.div`
     gap: 15px;
   }
 
-  input {
-    width: 100%;
+  .div-input input {
+    width: 97%;
+    margin:0 auto;
     height: 40px;
     font-size: 16px;
     border-radius: 5px;
@@ -122,10 +129,10 @@ const ContainerDash = styled.div`
     padding: 0px 2.5rem 0px 0.8rem;
     box-sizing: border-box;
     color: var(--color-two);
-    font: var(--font-text-3)
+    font: var(--font-text-3);
   }
 
-  input:focus {
+  .div-input input:focus {
     outline: 0.11rem solid var(--color-two);
   }
 
@@ -134,8 +141,6 @@ const ContainerDash = styled.div`
   }
 
   @media (min-width: 768px) {
-   
-
     .div-center {
       display: flex;
       justify-content: space-between;

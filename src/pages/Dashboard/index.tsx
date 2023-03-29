@@ -1,13 +1,21 @@
-import { useState } from "react";
+import { useContext } from "react";
 import logo from "../../assets/logo.png";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
 import { useNavigate } from "react-router-dom";
 import ContainerDash from "./styled";
 import ListNameContacts from "../../components/ListNamesContacts";
+import { ContactContext } from "../../contexts/contactContext";
+import { UserContext } from "../../contexts/UserContext";
+import AddContact from "../../components/AddContact";
+import EditUser from "../../components/EditUser";
 
 function Dashboard() {
   const navigate = useNavigate();
+
+  const { setInput, setAddOpenCloseModal, addOpenCloseModal } =
+    useContext(ContactContext);
+  const { userData, userOpenCloseModal, setUserOpenCloseModal } =
+    useContext(UserContext);
+
   return (
     <ContainerDash>
       <header>
@@ -15,8 +23,7 @@ function Dashboard() {
         <button
           className="div-logout"
           onClick={() => {
-            // localStorage.removeItem("@KenzieHub:token");
-            // localStorage.removeItem("@KenzieHub:userid");
+            localStorage.removeItem("@FullStack:token");
             navigate("/");
           }}
         >
@@ -24,30 +31,50 @@ function Dashboard() {
         </button>
       </header>
       <div className="div-center">
-        <h2>Olá, Vinicius Quirino</h2>
-        <p>Seu numero é: (14) 99853-6591</p>
-        <div className="div-update">
+        <h2>Olá, {userData.name}</h2>
+        <p>Seu numero é: {userData.telefone}</p>
+        <div
+          className="div-update"
+          onClick={() => {
+            setUserOpenCloseModal(!userOpenCloseModal);
+          }}
+        >
           <p>Editar</p>
         </div>
       </div>
 
       <section>
         <h3>Contatos</h3>
-        <div className="add">
-          <p>+</p>
+        <div
+          className="add"
+          onClick={() => {
+            setAddOpenCloseModal(!addOpenCloseModal);
+          }}
+        >
+          <p
+            onClick={() => {
+              setAddOpenCloseModal(!addOpenCloseModal);
+            }}
+          >
+            +
+          </p>
         </div>
       </section>
       <div className="div-input">
         <p>Digite o nome do contato para encontrar mais rapido!</p>
-        <input type="text" placeholder="Digite o nome aqui..." />
+        <input
+          type="text"
+          placeholder="Digite o nome aqui..."
+          onChange={(e) => setInput(e.target.value)}
+        />
       </div>
       <main>
         <ul className="contact-ul">
           <ListNameContacts />
-          <ListNameContacts />
-          <ListNameContacts />
         </ul>
       </main>
+      {addOpenCloseModal && <AddContact />}
+      {userOpenCloseModal && <EditUser />}
     </ContainerDash>
   );
 }
