@@ -88,7 +88,14 @@ const Providers = ({ children }: iProvidersProps) => {
     try {
       api.defaults.headers.common.authorization = `Bearer ${token}`;
 
-      await api.patch(`/users`, data);
+      const response = await api.patch(`/users`, data);
+
+      setUserData({
+        id: response.data.id,
+        name: response.data.name,
+        email: response.data.email,
+        telefone: response.data.telefone,
+      });
 
       toast.success("Usúario editado!");
     } catch (error) {
