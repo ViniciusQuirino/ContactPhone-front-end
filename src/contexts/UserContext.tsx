@@ -1,9 +1,9 @@
 import { createContext, useState, ReactNode, useContext } from "react";
-import { useEffect } from "react";
-import api from "../services/api";
+import { ContactContext } from "./contactContext";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { ContactContext } from "./contactContext";
+import { useEffect } from "react";
+import api from "../services/api";
 
 interface iProvidersProps {
   children: ReactNode;
@@ -30,16 +30,15 @@ interface iUserContext {
   userOpenCloseModal: boolean;
   setUserOpenCloseModal: React.Dispatch<React.SetStateAction<boolean>>;
   editUser: (data: iUserData) => Promise<void>;
-  deletedUser:() => Promise<void>
+  deletedUser: () => Promise<void>;
 }
 
 export interface iUserData {
-  id?:string;
+  id?: string;
   name: string;
   email: string;
   telefone: string;
 }
-
 
 export const UserContext = createContext({} as iUserContext);
 
@@ -64,7 +63,7 @@ const Providers = ({ children }: iProvidersProps) => {
           const contactsResponse = await api.get("/contact");
 
           setUserData({
-            id:response.data.id,
+            id: response.data.id,
             name: response.data.name,
             email: response.data.email,
             telefone: response.data.telefone,
@@ -89,7 +88,7 @@ const Providers = ({ children }: iProvidersProps) => {
     try {
       api.defaults.headers.common.authorization = `Bearer ${token}`;
 
-      const response = await api.patch(`/users`, data);
+      await api.patch(`/users`, data);
 
       toast.success("Usúario editado!");
     } catch (error) {
@@ -142,14 +141,10 @@ const Providers = ({ children }: iProvidersProps) => {
       });
 
       setContact(contactsResponse.data);
-      toast.success("Logado com sucesso!", {
-        theme: "dark",
-      });
+      toast.success("Logado com sucesso!");
       navigate(`/dashboard`);
     } catch (error) {
-      toast.error("Email ou senha invalido!", {
-        theme: "dark",
-      });
+      toast.error("Email ou senha invalido!");
     } finally {
       setGlobalLoading(false);
     }
@@ -160,14 +155,9 @@ const Providers = ({ children }: iProvidersProps) => {
       await api.post("users", data);
 
       navigate("/");
-      toast.success("Usuário cadastrado com sucesso!", {
-        theme: "dark",
-      });
+      toast.success("Usuário cadastrado com sucesso!");
     } catch (error) {
-      toast.error("Esse usuário já existe!"),
-        {
-          theme: "dark",
-        };
+      toast.error("Esse usuário já existe!");
     }
   }
 
@@ -181,7 +171,7 @@ const Providers = ({ children }: iProvidersProps) => {
         userOpenCloseModal,
         setUserOpenCloseModal,
         editUser,
-        deletedUser
+        deletedUser,
       }}
     >
       {children}
@@ -190,6 +180,3 @@ const Providers = ({ children }: iProvidersProps) => {
 };
 
 export default Providers;
-function setGlobalLoading(arg0: boolean) {
-  throw new Error("Function not implemented.");
-}

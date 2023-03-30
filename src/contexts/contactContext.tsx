@@ -1,8 +1,8 @@
-import { createContext, useState, ReactNode, useContext } from "react";
+import { createContext, useState, ReactNode } from "react";
 import { iFormEditContact } from "../components/EditContact";
 import { toast } from "react-toastify";
 import api from "../services/api";
-import { iUserData, UserContext } from "./UserContext";
+import { iUserData } from "./UserContext";
 
 interface iContactProvidersProps {
   children: ReactNode;
@@ -11,7 +11,6 @@ interface iContactProvidersProps {
 interface iContactContext {
   input: string;
   setInput: React.Dispatch<React.SetStateAction<string>>;
-  // getContact: () => Promise<void>;
   setContact: React.Dispatch<React.SetStateAction<iContactsData[]>>;
   contact: iContactsData[];
   editContact: (data: iFormEditContact, id: iContactsData) => Promise<void>;
@@ -32,7 +31,6 @@ interface iContactsData {
   email: string;
   name: string;
   telefone: string;
-
   createdAt?: Date;
 }
 
@@ -47,7 +45,6 @@ const ContactProvider = ({ children }: iContactProvidersProps) => {
   const [globalLoading, setGlobalLoading] = useState<boolean>(false);
 
   const token = localStorage.getItem("@FullStack:token");
-  // const id = localStorage.getItem('@KenzieHub:userid')
 
   async function addTechnology(data: iUserData): Promise<void> {
     setGlobalLoading(true);
@@ -67,31 +64,18 @@ const ContactProvider = ({ children }: iContactProvidersProps) => {
     }
   }
 
-  // async function getContact(): Promise<void> {
-  //   setGlobalLoading(true);
-  //   try {
-  //     api.defaults.headers.common.authorization = `Bearer ${token}`;
-
-  //     const response = await api.get(`/contact`);
-
-  //     setContact(response.data);
-  //   } catch (error) {
-  //     console.error(error);
-  //   } finally {
-  //     setGlobalLoading(false);
-  //   }
-  // }
-
   async function editContact(
     data: iFormEditContact,
-    id: iContactsData
+    dataLi: iContactsData
   ): Promise<void> {
     setGlobalLoading(true);
     try {
       api.defaults.headers.common.authorization = `Bearer ${token}`;
 
-      const response = await api.patch(`/contact/${id}`, data);
+      const response = await api.patch(`/contact/${dataLi.id}`, data);
 
+      const differentFind = contact.filter(elem => elem.id != response.data.id)
+      setContact([...differentFind, response.data]);
       toast.success("Contato editado!");
     } catch (error) {
       toast.error("O nome, email e telefone deve ser unicos!");

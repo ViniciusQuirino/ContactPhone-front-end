@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { ContactContext } from "../../contexts/contactContext";
 import ModalEdit from "./styled";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -44,6 +44,7 @@ function EditComponentContact() {
         </header>
         <form
           onSubmit={handleSubmit((data) => {
+            setOpenCloseModalEdit(!openCloseModalEdit);
             editContact(data, dataLi);
           })}
         >
